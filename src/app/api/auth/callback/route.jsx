@@ -36,7 +36,7 @@ export const GET = async (request) => {
       `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=Strict`
     )
 
-    return NextResponse.redirect('/', { headers: responseHeaders })
+    return NextResponse.redirect('http://localhost:3000/', { headers: responseHeaders })
   } catch (error) {
     console.error('Error exchanging code for tokens:', error.response?.data || error.message)
     return NextResponse.json(
