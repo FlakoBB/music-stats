@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import LoginWithSpotify from '../../components/LoginWithSpotify'
-import { cretePlaylist, getTopTracks } from '../../services/musicTop'
+import { addTracksToPlaylist, cretePlaylist, getTopTracks } from '../../services/musicTop'
 import { getUserData } from '../../services/login'
 
 const LandingPage = () => {
@@ -27,11 +27,16 @@ const LandingPage = () => {
       const userID = userData.id
 
       const newPlaylist = await cretePlaylist(userID)
-      console.log('Playlist creada:', newPlaylist)
+      const playlistID = newPlaylist.id
+
+      const songsAdded = await addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
+      console.log('Canciones agregadas:', songsAdded)
     } catch (err) {
       console.error('Error al obtener datos del usuario:', err.response?.data || err.message)
     }
   }
+
+  // TODO: Create menmu with buttons
 
   return (
     <div>

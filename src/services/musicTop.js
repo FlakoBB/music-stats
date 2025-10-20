@@ -17,7 +17,7 @@ export const getTopTracks = async () => {
         },
         params: {
           limit: 50,
-          time_range: 'short_term' // opciones: short_term, medium_term, long_term
+          time_range: 'medium_term' // opciones: short_term, medium_term, long_term // TODO: user can select time range
         }
       }
     )
@@ -41,9 +41,35 @@ export const cretePlaylist = async (userID) => {
     const response = await axios.post(
       `https://api.spotify.com/v1/users/${userID}/playlists`,
       {
-        name: 'Top 50',
-        description: 'Top 50 songs of the user',
+        name: 'Top 50', // TODO: personalizable
+        description: 'Top 50 songs of the last 6 months', // TODO: description depending time range or editable
         public: false
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    return response.data
+  } catch (err) {
+    console.error('Error al crear playlist:', err.response?.data || err.message)
+  }
+}
+
+export const addTracksToPlaylist = async (playlistID, tracks) => {
+  const token = window.localStorage.getItem('spotify_access_token')
+
+  if (!token) {
+    console.error('No hay token de Spotify guardado')
+    return
+  }
+
+  try {
+    const response = await axios.post(
+      `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+      {
+        uris: tracks
       },
       {
         headers: {
@@ -53,6 +79,6 @@ export const cretePlaylist = async (userID) => {
     )
     return response
   } catch (err) {
-    console.error('Error al crear playlist:', err.response?.data || err.message)
+    console.error('Error al agregar canciones a la playlist:', err.response?.data || err.message)
   }
 }
