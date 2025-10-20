@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import LoginWithSpotify from '../../components/LoginWithSpotify'
-import { getTopTracks } from '../../services/musicTop'
+import { cretePlaylist, getTopTracks } from '../../services/musicTop'
+import { getUserData } from '../../services/login'
 
 const LandingPage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -20,6 +21,18 @@ const LandingPage = () => {
     }
   }, [])
 
+  const createEmptyPlaylist = async () => {
+    try {
+      const userData = await getUserData()
+      const userID = userData.id
+
+      const newPlaylist = await cretePlaylist(userID)
+      console.log('Playlist creada:', newPlaylist)
+    } catch (err) {
+      console.error('Error al obtener datos del usuario:', err.response?.data || err.message)
+    }
+  }
+
   return (
     <div>
       Music Stats
@@ -27,11 +40,17 @@ const LandingPage = () => {
       {loggedIn && (
         <>
           <h2>Top Tracks</h2>
-          {tracks.map(track => (
+          {tracks.map((track, index) => (
             <article key={track.id}>
-              <p>Track: {track.name}</p>
+              <p>({index + 1}) Track: {track.name} - {track.artists[0]?.name}</p>
             </article>
           ))}
+          <button
+            type='button'
+            onClick={createEmptyPlaylist}
+          >
+            Crear Playlist
+          </button>
         </>
       )}
     </div>

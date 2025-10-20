@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const clientId = '823a8affd15c420782450579e590d7a3'
 const redirectUri = 'http://localhost:5173/callback'
 const scope = 'user-top-read playlist-modify-public playlist-modify-private'
@@ -38,4 +40,24 @@ export const loginWithSpotify = async () => {
   })
 
   window.location = `https://accounts.spotify.com/authorize?${params.toString()}`
+}
+
+export const getUserData = async () => {
+  const token = window.localStorage.getItem('spotify_access_token')
+
+  if (!token) {
+    console.error('No hay token de Spotify guardado')
+    return
+  }
+
+  try {
+    const response = await axios.get('https://api.spotify.com/v1/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return response.data
+  } catch (err) {
+    console.error('Error al obtener datos del usuario:', err.response?.data || err.message)
+  }
 }
