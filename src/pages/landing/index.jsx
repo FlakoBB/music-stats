@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import LoginWithSpotifyButton from '../../components/LoginWithSpotify'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../components/Button'
 
 const LandingPage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -48,29 +49,26 @@ const LandingPage = () => {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           justifyContent: 'center',
           gap: '1rem'
         }}
       >
-        <button
+        <Button
           type='button'
           onClick={() => navigate('/top-tracks')}
-        >
-          Top Tracks
-        </button>
-        <button
+          text='Top Tracks'
+        />
+        <Button
           type='button'
           onClick={() => navigate('/top-artists')}
-        >
-          Top Artists
-        </button>
-        <button
+          text='Top Artists'
+        />
+        <Button
           type='button'
           onClick={() => navigate('/top-genres')}
-        >
-          Top Genres
-        </button>
+          text='Top Genres'
+        />
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getUserData } from '../../services/login'
 import { addTracksToPlaylist, cretePlaylist, getTopTracks } from '../../services/musicTop'
+import Button from '../../components/Button'
 
 const TracksPage = () => {
   const [tracks, setTracks] = useState([])
@@ -37,12 +38,11 @@ const TracksPage = () => {
           <p>({index + 1}) Track: {track.name} - {track.artists[0]?.name}</p>
         </article>
       ))}
-      <button
+      <Button
         type='button'
         onClick={createEmptyPlaylist}
-      >
-        Crear Playlist
-      </button>
+        text='Crear Playlist'
+      />
     </div>
   )
 }
