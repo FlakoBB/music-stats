@@ -1,63 +1,77 @@
 import { useEffect, useState } from 'react'
-import LoginWithSpotify from '../../components/LoginWithSpotify'
-import { addTracksToPlaylist, cretePlaylist, getTopTracks } from '../../services/musicTop'
-import { getUserData } from '../../services/login'
+import LoginWithSpotifyButton from '../../components/LoginWithSpotify'
+import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
-  const [tracks, setTracks] = useState([])
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = window.localStorage.getItem('spotify_access_token')
     if (token) {
       setLoggedIn(true)
-      const fetchTracks = async () => {
-        const data = await getTopTracks()
-        setTracks(data || [])
-      }
-      fetchTracks()
     } else {
       setLoggedIn(false)
     }
   }, [])
 
-  const createEmptyPlaylist = async () => {
-    try {
-      const userData = await getUserData()
-      const userID = userData.id
-
-      const newPlaylist = await cretePlaylist(userID)
-      const playlistID = newPlaylist.id
-
-      const songsAdded = await addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
-      console.log('Canciones agregadas:', songsAdded)
-    } catch (err) {
-      console.error('Error al obtener datos del usuario:', err.response?.data || err.message)
-    }
+  if (!loggedIn) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: '1rem'
+        }}
+      >
+        <h1>Music Stats</h1>
+        <p>Inicia sesión para poder obtener tus tops de canciones, artitas y generos</p>
+        <LoginWithSpotifyButton />
+      </div>
+    )
   }
 
-  // TODO: Create menmu with buttons
-
   return (
-    <div>
-      Music Stats
-      {!loggedIn && <LoginWithSpotify />}
-      {loggedIn && (
-        <>
-          <h2>Top Tracks</h2>
-          {tracks.map((track, index) => (
-            <article key={track.id}>
-              <p>({index + 1}) Track: {track.name} - {track.artists[0]?.name}</p>
-            </article>
-          ))}
-          <button
-            type='button'
-            onClick={createEmptyPlaylist}
-          >
-            Crear Playlist
-          </button>
-        </>
-      )}
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}
+    >
+      <h1>Music Stats</h1>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '1rem'
+        }}
+      >
+        <button
+          type='button'
+          onClick={() => navigate('/top-tracks')}
+        >
+          Top Tracks
+        </button>
+        <button
+          type='button'
+          onClick={() => navigate('/top-artists')}
+        >
+          Top Artists
+        </button>
+        <button
+          type='button'
+          onClick={() => navigate('/top-genres')}
+        >
+          Top Genres
+        </button>
+      </div>
     </div>
   )
 }

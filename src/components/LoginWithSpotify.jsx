@@ -1,6 +1,6 @@
 import { loginWithSpotify } from '../services/login'
 
-const LoginWithSpotify = () => {
+const LoginWithSpotifyButton = () => {
   return (
     <button
       type='button'
@@ -12,4 +12,4 @@ const LoginWithSpotify = () => {
   )
 }
 
-export default LoginWithSpotify
+export default LoginWithSpotifyButton

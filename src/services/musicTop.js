@@ -17,7 +17,7 @@ export const getTopTracks = async () => {
         },
         params: {
           limit: 50,
-          time_range: 'medium_term' // opciones: short_term, medium_term, long_term // TODO: user can select time range
+          time_range: 'long_term' // opciones: short_term, medium_term, long_term // TODO: user can select time range
         }
       }
     )
