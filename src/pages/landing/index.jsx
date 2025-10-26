@@ -61,10 +61,12 @@ const LandingPage = () => {
         <Button
           onClick={() => navigate('/top-artists')}
           text='Top Artists'
+          isDisabled
         />
         <Button
           onClick={() => navigate('/top-genres')}
           text='Top Genres'
+          isDisabled
         />
       </div>
     </div>

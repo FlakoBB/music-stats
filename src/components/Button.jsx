@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react'
 import styles from '../styles/components/buttons.module.scss'
 
-const Button = ({ type = 'button', text = 'Button', onClick, size = 'md', color = 'primary', variant = 'default' }) => {
+const Button = ({
+  type = 'button',
+  text = 'Button',
+  onClick,
+  size = 'md',
+  color = 'primary',
+  variant = 'default',
+  isDisabled = false
+}) => {
   const [fullStyles, setFullStyles] = useState('')
 
   const configStyles = () => {
@@ -52,6 +60,10 @@ const Button = ({ type = 'button', text = 'Button', onClick, size = 'md', color 
         break
     }
 
+    if (isDisabled) {
+      finalStyles = finalStyles + ` ${styles.btn_disabled}`
+    }
+
     setFullStyles(finalStyles)
   }
 
@@ -64,6 +76,7 @@ const Button = ({ type = 'button', text = 'Button', onClick, size = 'md', color 
       type={type}
       onClick={onClick}
       className={fullStyles}
+      disabled={isDisabled}
     >
       {text}
     </button>
