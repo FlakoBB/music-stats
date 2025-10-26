@@ -55,17 +55,14 @@ const LandingPage = () => {
         }}
       >
         <Button
-          type='button'
           onClick={() => navigate('/top-tracks')}
           text='Top Tracks'
         />
         <Button
-          type='button'
           onClick={() => navigate('/top-artists')}
           text='Top Artists'
         />
         <Button
-          type='button'
           onClick={() => navigate('/top-genres')}
           text='Top Genres'
         />
