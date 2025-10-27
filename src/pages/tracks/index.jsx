@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import userServises from '../../services/userServices'
 import tracksServices from '../../services/tracksServices'
+import ModalWindow from '../../components/ModalWindow'
 
 const TIME_RANGES = {
   SHORT: {
@@ -21,6 +22,19 @@ const TIME_RANGES = {
 const TracksPage = () => {
   const [tracks, setTracks] = useState([])
   const [timeRange, setTimeRange] = useState(TIME_RANGES.SHORT.id)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [playlistData, setPlaylistData] = useState({
+    title: '',
+    description: ''
+  })
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setPlaylistData({
+      ...playlistData,
+      [name]: value
+    })
+  }
 
   const fetchTracks = async () => {
     const data = await tracksServices.getTopTracks(timeRange)
@@ -36,10 +50,12 @@ const TracksPage = () => {
       const userData = await userServises.getUserData()
       const userID = userData.id
 
-      const newPlaylist = await tracksServices.cretePlaylist(userID, 'Test title', 'Test description')
+      const newPlaylist = await tracksServices.cretePlaylist(userID, playlistData.title, playlistData.description)
       const playlistID = newPlaylist.id
 
       await tracksServices.addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
+
+      setModalIsOpen(false)
     } catch (err) {
       console.error('Error al obtener datos del usuario:', err.response?.data || err.message)
     }
@@ -47,6 +63,54 @@ const TracksPage = () => {
 
   return (
     <div>
+      <ModalWindow
+        isOpen={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+      >
+        <h3>Crear Playlist</h3>
+        <p>Se creará la siguiente playlist en tu perfil de Spotify.</p>
+        <label htmlFor='playlist-title'>
+          Título:
+          <input
+            style={{ backgroundColor: '#121212' }}
+            type='text'
+            id='playlist-title'
+            name='title'
+            value={playlistData.title}
+            onChange={(e) => handleChange(e)}
+          />
+        </label>
+        <label htmlFor='playlist-description'>
+          Descripción:
+          <input
+            style={{ backgroundColor: '#121212' }}
+            type='text'
+            id='playlist-description'
+            name='description'
+            value={playlistData.description}
+            onChange={(e) => handleChange(e)}
+          />
+        </label>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            gap: '1rem'
+          }}
+        >
+          <Button
+            variant='outline'
+            color='error'
+            text='Cancelar'
+            onClick={() => setModalIsOpen(false)}
+          />
+          <Button
+            text='Guardar'
+            onClick={savePlaylist}
+          />
+        </div>
+      </ModalWindow>
       <h2>Top Tracks</h2>
       <div
         style={{
@@ -72,7 +136,7 @@ const TracksPage = () => {
       ))}
       <Button
         type='button'
-        onClick={savePlaylist}
+        onClick={() => setModalIsOpen(true)}
         text='Crear Playlist'
       />
     </div>
