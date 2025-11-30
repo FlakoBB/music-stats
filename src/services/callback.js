@@ -1,8 +1,8 @@
 // callback.js
 import axios from 'axios'
 
-const clientId = '823a8affd15c420782450579e590d7a3'
-const redirectUri = 'http://localhost:5173/callback'
+const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID
+const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI
 
 export const handleCallback = async () => {
   const params = new URLSearchParams(window.location.search)
