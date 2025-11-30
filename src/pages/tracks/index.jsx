@@ -3,6 +3,7 @@ import Button from '../../components/Button'
 import userServises from '../../services/userServices'
 import tracksServices from '../../services/tracksServices'
 import ModalWindow from '../../components/ModalWindow'
+import TrackRow from '../../components/TrackRow'
 
 const TIME_RANGES = {
   SHORT: {
@@ -130,9 +131,11 @@ const TracksPage = () => {
         ))}
       </div>
       {tracks.map((track, index) => (
-        <article key={track.id}>
-          <p>({index + 1}) Track: {track.name} - {track.artists[0]?.name}</p>
-        </article>
+        <TrackRow
+          key={track.id}
+          track={track}
+          position={index + 1}
+        />
       ))}
       <Button
         type='button'

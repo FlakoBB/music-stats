@@ -1,0 +1,36 @@
+@use '../colors' as color;
+
+.track_row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: .5rem 1rem;
+
+  .position_number {
+    font-weight: 600;
+  }
+
+  .track_cover {
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    border-radius: 4px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .track_name {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .artist_name {
+    font-size: .85rem;
+    color: color.$gray;
+  }
+}
