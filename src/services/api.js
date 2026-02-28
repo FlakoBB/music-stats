@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { refreshAccessToken } from './refreshToken'
 
 const axiosInstance = axios.create({
   baseURL: 'https://api.spotify.com/v1',
@@ -14,6 +15,30 @@ axiosInstance.interceptors.request.use((config) => {
 
   return config
 })
+
+axiosInstance.interceptors.response.use(
+  response => response,
+  async (error) => {
+    const originalRequest = error.config
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true
+
+      const newToken =
+        await refreshAccessToken()
+
+      originalRequest.headers.Authorization =
+        `Bearer ${newToken}`
+
+      return axiosInstance(originalRequest)
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 const api = {
   get: async (url, config = {}) => {
