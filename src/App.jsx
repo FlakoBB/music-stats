@@ -3,6 +3,7 @@ import LandingPage from './pages/landing'
 import CallbackPage from './pages/callback'
 import TracksPage from './pages/tracks'
 import ArtistsPage from './pages/artists'
+import MainLayout from './Layouts/MainLayout'
 
 function App () {
   return (
@@ -13,11 +14,13 @@ function App () {
       }}
     >
       <Routes>
-        <Route path='/' element={<LandingPage />} />
         <Route path='/callback' element={<CallbackPage />} />
-        <Route path='/top-tracks' element={<TracksPage />} />
-        <Route path='/top-artists' element={<ArtistsPage />} />
-        <Route path='/top-genres' element={<p>Top Genres</p>} />
+        <Route path='/' element={<MainLayout />}>
+          <Route index element={<LandingPage />} />
+          <Route path='/top-tracks' element={<TracksPage />} />
+          <Route path='/top-artists' element={<ArtistsPage />} />
+          <Route path='/top-genres' element={<p>Top Genres</p>} />
+        </Route>
       </Routes>
     </Router>
   )

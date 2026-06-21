@@ -1,0 +1,49 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.main {
+  height: calc(100dvh - 4rem); // 100dvh minus header height
+  background-image: radial-gradient(
+    circle at top,
+    c.scale(color.$primary, $lightness: -85%),
+    c.scale(color.$primary, $lightness: -90%),
+    c.scale(color.$primary, $lightness: -95%),
+    color.$neutral,
+    color.$neutral);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+
+  .title {
+    font-size: 3rem;
+
+    span {
+      display: inline-block;
+      background-image: linear-gradient(
+        90deg,
+        color.$primary,
+        color.$white
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .description {
+    font-size: 1.2rem;
+    color: c.scale(color.$secondary, $lightness: 60%);
+    text-align: center;
+    text-wrap: pretty;
+    width: 100%;
+    max-width: 768px;
+  }
+}
+
+.main2 {
+  height: calc(100dvh - 4rem); // 100dvh minus header height
+  background-color: red;
+}

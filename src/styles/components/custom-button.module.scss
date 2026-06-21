@@ -1,0 +1,28 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.custom_button {
+  border: none;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+
+  &.filled {
+    &.xl {
+      padding: 1rem 2.5rem;
+      font-size: 1.8rem;
+      border-radius: 8px;
+      border: 1px solid;
+    }
+
+    &.primary {
+      background-color: color.$primary;
+      color: c.scale(color.$primary, $lightness: -50%);
+      border-color: color.$primary;
+
+      &:hover {
+        box-shadow: 0 0 8px 1px c.adjust(color.$primary, $alpha: -.4);
+      }
+    }
+  }
+}
