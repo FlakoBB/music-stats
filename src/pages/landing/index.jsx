@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import LoginWithSpotifyButton from '../../components/LoginWithSpotify'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../components/Button'
 import styles from '../../styles/pages/landing.module.scss'
 import CustomButton from '../../components/CustomButton'
+import VINIL from '../../assets/images/vinil.jpg'
+import SINGER from '../../assets/images/singer.jpg'
+import MIXER from '../../assets/images/mixer.jpg'
 
 const LandingPage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -19,75 +21,60 @@ const LandingPage = () => {
     }
   }, [])
 
-  // if (!loggedIn) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: 'flex',
-  //         alignItems: 'center',
-  //         justifyContent: 'center',
-  //         flexDirection: 'column',
-  //         gap: '1rem'
-  //       }}
-  //     >
-  //       <h1>Music Stats</h1>
-  //       <p>Inicia sesión para poder obtener tus tops de canciones, artitas y generos</p>
-  //       <LoginWithSpotifyButton />
-  //     </div>
-  //   )
-  // }
-
-  // return (
-  //   <div
-  //     style={{
-  //       display: 'flex',
-  //       alignItems: 'center',
-  //       justifyContent: 'center',
-  //       flexDirection: 'column',
-  //       gap: '1rem'
-  //     }}
-  //   >
-  //     <h1>Music Stats</h1>
-  //     <div
-  //       style={{
-  //         display: 'flex',
-  //         alignItems: 'flex-end',
-  //         justifyContent: 'center',
-  //         gap: '1rem'
-  //       }}
-  //     >
-  //       <Button
-  //         onClick={() => navigate('/top-tracks')}
-  //         text='Top Tracks'
-  //       />
-  //       <Button
-  //         onClick={() => navigate('/top-artists')}
-  //         text='Top Artists'
-  //       />
-  //       <Button
-  //         onClick={() => navigate('/top-genres')}
-  //         text='Top Genres'
-  //         isDisabled
-  //       />
-  //     </div>
-  //   </div>
-  // )
-
   return (
     <>
       <section className={styles.main}>
         <h2 className={styles.title}>Your Music, <span>Decoded</span></h2>
         <p className={styles.description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In accusantium quia atque laboriosam aut, dolores nam suscipit eveniet quibusdam harum!</p>
-        {!loggedIn
+        {loggedIn
           ? (
-            <CustomButton>
+            <CustomButton
+              size='xl'
+              onClick={() => {
+                document.getElementById('options')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
               Comenzar
             </CustomButton>
             )
           : <LoginWithSpotifyButton />}
       </section>
-      <section id='options' className={styles.main2}>
-        <h2 className={styles.title}><span>OPTIONS</span></h2>
+      <section id='options' className={styles.options}>
+        {[
+          {
+            title: 'Canciones Más Escuchadas',
+            description: 'Descubre que canciones están entre tus favoritas',
+            image: VINIL,
+            route: '/top-tracks'
+          },
+          {
+            title: 'Artistas Más Escuchados',
+            description: 'Descubre a los artistas que siempre te acompañan',
+            image: SINGER,
+            route: '/top-artists'
+          },
+          {
+            title: 'Géneros Más Escuchados',
+            description: 'Descubre todos los géneros que vibran como tu',
+            image: MIXER,
+            route: '/top-genres'
+          }
+        ].map((item, index) => (
+          <article
+            key={index}
+            className={styles.card}
+            onClick={() => navigate(item.route)}
+          >
+            <img
+              src={item.image}
+            />
+            <div className={styles.card_content}>
+              <h3 className={styles.card_title}>{item.title}</h3>
+              <p className={styles.card_description}>{item.description}</p>
+            </div>
+          </article>
+        ))}
       </section>
     </>
   )
