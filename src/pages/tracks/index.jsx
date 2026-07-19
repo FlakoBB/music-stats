@@ -4,6 +4,7 @@ import userServises from '../../services/userServices'
 import tracksServices from '../../services/tracksServices'
 import ModalWindow from '../../components/ModalWindow'
 import TrackRow from '../../components/TrackRow'
+import styles from '../../styles/pages/top-tracks.module.scss'
 
 const TIME_RANGES = {
   SHORT: {
@@ -63,7 +64,40 @@ const TracksPage = () => {
   }
 
   return (
-    <div>
+    <section className={styles.container}>
+      <header className={styles.header}>
+        <div>
+          <h1>Top Tracks</h1>
+          <p className={styles.description}>Tus canciones mas escuchadas</p>
+        </div>
+        <div className={styles.options}>
+          {Object.values(TIME_RANGES).map((range) => (
+            <button
+              key={range.id}
+              type='button'
+              onClick={() => setTimeRange(range.id)}
+              className={`${styles.op} ${range.id === timeRange ? styles.op_selected : ''}`}
+              variant={range.id === timeRange ? 'default' : 'outline'}
+            >
+              {range.label}
+            </button>
+          ))}
+        </div>
+      </header>
+      <div className={styles.list}>
+        {tracks.map((track, index) => (
+          <TrackRow
+            key={track.id}
+            track={track}
+            position={index + 1}
+          />
+        ))}
+      </div>
+    </section>
+  )
+
+  return (
+    <div style={{ backgroundColor: 'red' }}>
       <ModalWindow
         isOpen={modalIsOpen}
         onClose={() => setModalIsOpen(false)}

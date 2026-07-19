@@ -1,0 +1,63 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.container {
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+
+    h1 {
+      font-size: 2.2rem;
+      color: c.scale(color.$primary, $lightness: 75%);
+    }
+
+    .description {
+      font-size: 1.1rem;
+      color: color.$gray;
+    }
+
+    .options {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 1rem;
+      border: 1px solid c.adjust(color.$gray, $alpha: -.8);
+      padding: 6px;
+      border-radius: 12px;
+
+      .op {
+        background: none;
+        border: 1px solid transparent;
+        outline: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: color.$gray;
+        padding: .4rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: c.adjust(color.$primary, $alpha: -.9);
+        }
+
+        &.op_selected {
+          border: 1px solid color.$primary;
+          color: color.$primary;
+          background-color: c.adjust(color.$primary, $alpha: -.9);
+        }
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: .8rem;
+    padding: 0 1rem;
+  }
+}
