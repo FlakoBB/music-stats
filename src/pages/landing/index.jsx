@@ -40,42 +40,44 @@ const LandingPage = () => {
             )
           : <LoginWithSpotifyButton />}
       </section>
-      <section id='options' className={styles.options}>
-        {[
-          {
-            title: 'Canciones Más Escuchadas',
-            description: 'Descubre que canciones están entre tus favoritas',
-            image: VINIL,
-            route: '/top-tracks'
-          },
-          {
-            title: 'Artistas Más Escuchados',
-            description: 'Descubre a los artistas que siempre te acompañan',
-            image: SINGER,
-            route: '/top-artists'
-          },
-          {
-            title: 'Géneros Más Escuchados',
-            description: 'Descubre todos los géneros que vibran como tu',
-            image: MIXER,
-            route: '/top-genres'
-          }
-        ].map((item, index) => (
-          <article
-            key={index}
-            className={styles.card}
-            onClick={() => navigate(item.route)}
-          >
-            <img
-              src={item.image}
-            />
-            <div className={styles.card_content}>
-              <h3 className={styles.card_title}>{item.title}</h3>
-              <p className={styles.card_description}>{item.description}</p>
-            </div>
-          </article>
-        ))}
-      </section>
+      {loggedIn && (
+        <section id='options' className={styles.options}>
+          {[
+            {
+              title: 'Canciones Más Escuchadas',
+              description: 'Descubre que canciones están entre tus favoritas',
+              image: VINIL,
+              route: '/top-tracks'
+            },
+            {
+              title: 'Artistas Más Escuchados',
+              description: 'Descubre a los artistas que siempre te acompañan',
+              image: SINGER,
+              route: '/top-artists'
+            },
+            {
+              title: 'Géneros Más Escuchados',
+              description: 'Descubre todos los géneros que vibran como tu',
+              image: MIXER,
+              route: '/top-genres'
+            }
+          ].map((item, index) => (
+            <article
+              key={index}
+              className={styles.card}
+              onClick={() => navigate(item.route)}
+            >
+              <img
+                src={item.image}
+              />
+              <div className={styles.card_content}>
+                <h3 className={styles.card_title}>{item.title}</h3>
+                <p className={styles.card_description}>{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </section>
+      )}
     </>
   )
 }
