@@ -1,0 +1,36 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.form_field {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+
+  label {
+    font-size: 1rem;
+    color: color.$gray;
+    font-weight: 500;
+  }
+
+  input,
+  textarea {
+    padding: .6rem 1rem;
+    border-radius: 6px;
+    border: 1px solid c.adjust(color.$gray, $alpha: -.9);
+    outline: none;
+    font-size: 1.1rem;
+    color: color.$gray;
+    background-color: c.adjust(color.$gray, $alpha: -.9);
+
+    &:focus {
+      border-color: color.$primary;
+      box-shadow: 0 0 8px 1px c.adjust(color.$primary, $alpha: -.4);
+    }
+  }
+
+  textarea {
+    resize: none;
+    field-sizing: content;
+    min-height: 2rem;
+  }
+}
