@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import LoginWithSpotifyButton from '../../components/LoginWithSpotify'
 import { useNavigate } from 'react-router-dom'
+import LoginWithSpotifyButton from '../../components/LoginWithSpotify'
+import { useAuth } from '../../context/AuthContext'
 import styles from '../../styles/pages/landing.module.scss'
 import CustomButton from '../../components/CustomButton'
 import VINIL from '../../assets/images/vinil.jpg'
@@ -8,25 +8,16 @@ import SINGER from '../../assets/images/singer.jpg'
 import MIXER from '../../assets/images/mixer.jpg'
 
 const LandingPage = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const { isAuthenticated } = useAuth()
 
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const token = window.localStorage.getItem('spotify_access_token')
-    if (token) {
-      setLoggedIn(true)
-    } else {
-      setLoggedIn(false)
-    }
-  }, [])
 
   return (
     <>
       <section className={styles.main}>
         <h2 className={styles.title}>Your Music, <span>Decoded</span></h2>
         <p className={styles.description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In accusantium quia atque laboriosam aut, dolores nam suscipit eveniet quibusdam harum!</p>
-        {loggedIn
+        {isAuthenticated
           ? (
             <CustomButton
               size='xl'
@@ -40,7 +31,7 @@ const LandingPage = () => {
             )
           : <LoginWithSpotifyButton />}
       </section>
-      {loggedIn && (
+      {isAuthenticated && (
         <section id='options' className={styles.options}>
           {[
             {

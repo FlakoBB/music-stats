@@ -24,5 +24,15 @@
         box-shadow: 0 0 8px 1px c.adjust(color.$primary, $alpha: -.4);
       }
     }
+
+    &.error {
+      background-color: color.$red;
+      color: c.scale(color.$red, $lightness: -50%);
+      border-color: color.$red;
+
+      &:hover {
+        box-shadow: 0 0 8px 1px c.adjust(color.$red, $alpha: -.4);
+      }
+    }
   }
 }
