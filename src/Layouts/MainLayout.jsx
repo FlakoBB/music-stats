@@ -27,6 +27,8 @@ const MainLayout = () => {
             <span className={styles.name}>{user.display_name}</span>
             <CustomButton
               color='error'
+              size='sm'
+              variant='text'
               onClick={logout}
             >
               Cerrar Sesión
