@@ -14,9 +14,9 @@ const tracksServices = {
     }
   },
 
-  cretePlaylist: async (userID, name, description) => {
+  cretePlaylist: async (name, description) => {
     try {
-      const response = await api.post(`/users/${userID}/playlists`, {
+      const response = await api.post('/me/playlists', {
         name,
         description,
         public: false
@@ -29,7 +29,7 @@ const tracksServices = {
 
   addTracksToPlaylist: async (playlistID, tracks) => {
     try {
-      const response = await api.post(`/playlists/${playlistID}/tracks`, {
+      const response = await api.post(`/playlists/${playlistID}/items`, {
         uris: tracks
       })
       return response
