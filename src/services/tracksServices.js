@@ -36,6 +36,27 @@ const tracksServices = {
     } catch (error) {
       console.error('Error al agregar canciones a la playlist:', error.response?.data || error.message)
     }
+  },
+
+  addPlaylistCover: async (playlistID, base64Image) => {
+    try {
+      const response = await api.put(
+        `/playlists/${playlistID}/images`,
+        base64Image,
+        {
+          headers: {
+            'Content-Type': 'image/jpeg'
+          }
+        }
+      )
+
+      return response
+    } catch (error) {
+      console.error(
+        'Error al agregar portada a la playlist:',
+        error.response?.data || error.message
+      )
+    }
   }
 }
 

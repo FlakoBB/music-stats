@@ -1,6 +1,6 @@
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID
 const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI
-const scope = 'user-top-read playlist-modify-public playlist-modify-private'
+const scope = 'user-top-read playlist-modify-public playlist-modify-private ugc-image-upload'
 
 const generateRandomString = (length) => {
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

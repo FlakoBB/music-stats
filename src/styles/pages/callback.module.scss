@@ -1,0 +1,26 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.container {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  .loader {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background: transparent;
+    border: 6px solid c.adjust(color.$primary, $alpha: -.9);
+    border-top: 6px solid color.$primary;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,4 +1,5 @@
 @use '../colors' as color;
+@use 'sass:color' as c;
 
 .track_row {
   display: flex;
@@ -6,9 +7,15 @@
   justify-content: flex-start;
   gap: 1rem;
   padding: .5rem 1rem;
+  border: 1px solid c.adjust(color.$gray, $alpha: -.8);
+  border-radius: .5rem;
 
   .position_number {
-    font-weight: 600;
+    width: 2rem;
+    text-align: center;
+    font-weight: 700;
+    -webkit-text-stroke: 1px c.adjust(color.$primary, $alpha: -.8);
+    color: c.adjust(color.$gray, $alpha: -.8);
   }
 
   .track_cover {
@@ -32,5 +39,14 @@
   .artist_name {
     font-size: .85rem;
     color: color.$gray;
+  }
+
+  &:hover {
+    border: 1px solid c.adjust(color.$primary, $alpha: -.6);
+    background-color: c.adjust(color.$primary, $alpha: -.9);
+
+    .position_number {
+      color: color.$primary;
+    }
   }
 }

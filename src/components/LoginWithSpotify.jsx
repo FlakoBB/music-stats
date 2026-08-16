@@ -1,13 +1,14 @@
 import { loginWithSpotify } from '../services/login'
-import Button from './Button'
+import CustomButton from './CustomButton'
 
 const LoginWithSpotifyButton = () => {
   return (
-    <Button
-      type='button'
+    <CustomButton
+      size='xl'
       onClick={loginWithSpotify}
-      text='Login with Spotify'
-    />
+    >
+      Iniciar Sesión con Spotify
+    </CustomButton>
   )
 }
 

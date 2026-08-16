@@ -56,6 +56,14 @@ const api = {
     } catch (error) {
       handleError(error)
     }
+  },
+  put: async (url, data = {}, config = {}) => {
+    try {
+      const response = await axiosInstance.put(url, data, config)
+      return response.data
+    } catch (error) {
+      handleError(error)
+    }
   }
 }
 

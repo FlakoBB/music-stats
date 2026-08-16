@@ -1,7 +1,7 @@
 @use '../colors' as color;
 @use 'sass:color' as c;
 
-.artist_row {
+.genre_row {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -18,22 +18,20 @@
     color: c.adjust(color.$gray, $alpha: -.8);
   }
 
-  .artist_image {
-    width: 4rem;
-    height: 4rem;
-    overflow: hidden;
-    border-radius: 4px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .artist_name {
+  .genre_name {
+    flex: 1;
     font-size: 1.125rem;
     font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .score {
+    padding: .25rem .75rem;
+    border-radius: 999px;
+    background-color: c.adjust(color.$primary, $alpha: -.85);
+    color: color.$primary;
+    font-weight: 700;
+    font-size: .875rem;
   }
 
   &:hover {
