@@ -15,8 +15,8 @@ const LandingPage = () => {
   return (
     <>
       <section className={styles.main}>
-        <h2 className={styles.title}>Your Music, <span>Decoded</span></h2>
-        <p className={styles.description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In accusantium quia atque laboriosam aut, dolores nam suscipit eveniet quibusdam harum!</p>
+        <h1 className={styles.title}>Descubre tu <span>Soundtrack</span></h1>
+        <p className={styles.description}>Sumérgete en tus tops de Spotify y descubre qué canciones, artistas y géneros son parte de tu historia.</p>
         {isAuthenticated
           ? (
             <CustomButton

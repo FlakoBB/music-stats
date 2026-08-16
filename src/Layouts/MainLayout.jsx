@@ -10,11 +10,12 @@ const MainLayout = () => {
   return (
     <>
       <header className={styles.header}>
-        <h1
+        <span
+          className={styles.logo}
           onClick={() => navigate('/')}
         >
           Music Stats
-        </h1>
+        </span>
         {user && (
           <div className={styles.user}>
             {user.images?.[0]?.url && (
