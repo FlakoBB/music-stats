@@ -1,4 +1,5 @@
 import ArtistsPage from '../pages/artists'
+import GenresPage from '../pages/genres'
 import TracksPage from '../pages/tracks'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -13,7 +14,7 @@ const routesConfig = [
   },
   {
     path: '/top-genres',
-    element: <ProtectedRoute><p>Top Genres</p></ProtectedRoute>
+    element: <ProtectedRoute><GenresPage /></ProtectedRoute>
   }
 ]
 
