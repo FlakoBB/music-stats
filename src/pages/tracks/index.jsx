@@ -4,7 +4,6 @@ import TrackRow from '../../components/TrackRow'
 import styles from '../../styles/pages/top-tracks.module.scss'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-import { useAuth } from '../../context/AuthContext'
 import { toJpeg } from 'html-to-image'
 
 const TIME_RANGES = {
@@ -23,7 +22,6 @@ const TIME_RANGES = {
 }
 
 const TracksPage = () => {
-  const { user } = useAuth()
   const [tracks, setTracks] = useState([])
   const [timeRange, setTimeRange] = useState(TIME_RANGES.SHORT.id)
   const [newPlaylistData, setNewPlaylistData] = useState({
@@ -53,6 +51,8 @@ const TracksPage = () => {
 
   useEffect(() => {
     fetchTracks()
+    setFormStatus({ isCreating: false, isCreated: false })
+    setNewPlaylistData({ title: '', description: '' })
   }, [timeRange])
 
   const generatePlaylistCover = async () => {
@@ -78,7 +78,6 @@ const TracksPage = () => {
       const base64Image = await generatePlaylistCover()
 
       setFormStatus({ isCreating: true, isCreated: false })
-      const userID = user.id
 
       const date = new Date().toLocaleDateString('es-MX', {
         year: 'numeric',
@@ -90,7 +89,7 @@ const TracksPage = () => {
       const title = newPlaylistData.title || 'Top Tracks'
       const description = `${newPlaylistData.description || `Mis canciones más escuchadas ${term}`} - Generado el ${date} por https://music-stats-one.vercel.app/ -`
 
-      const newPlaylist = await tracksServices.cretePlaylist(userID, title, description)
+      const newPlaylist = await tracksServices.cretePlaylist(title, description)
       const playlistID = newPlaylist.id
 
       await tracksServices.addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
