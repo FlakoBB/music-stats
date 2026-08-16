@@ -80,7 +80,17 @@ const TracksPage = () => {
       setFormStatus({ isCreating: true, isCreated: false })
       const userID = user.id
 
-      const newPlaylist = await tracksServices.cretePlaylist(userID, newPlaylistData.title, newPlaylistData.description)
+      const date = new Date().toLocaleDateString('es-MX', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+      const term = timeRange === 'short_term' ? 'del mes' : timeRange === 'medium_term' ? 'del semestre' : 'de todos los tiempos'
+
+      const title = newPlaylistData.title || 'Top Tracks'
+      const description = `${newPlaylistData.description || `Mis canciones más escuchadas ${term}`} - Generado el ${date} por https://music-stats-one.vercel.app/ -`
+
+      const newPlaylist = await tracksServices.cretePlaylist(userID, title, description)
       const playlistID = newPlaylist.id
 
       await tracksServices.addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
