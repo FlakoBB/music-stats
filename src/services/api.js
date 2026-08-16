@@ -27,13 +27,22 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._retry = true
 
-      const newToken =
-        await refreshAccessToken()
+      try {
+        const newToken = await refreshAccessToken()
 
-      originalRequest.headers.Authorization =
-        `Bearer ${newToken}`
+        originalRequest.headers.Authorization =
+          `Bearer ${newToken}`
 
-      return axiosInstance(originalRequest)
+        return axiosInstance(originalRequest)
+      } catch (refreshError) {
+        window.localStorage.removeItem('spotify_access_token')
+        window.localStorage.removeItem('spotify_refresh_token')
+        window.localStorage.removeItem('spotify_code_verifier')
+
+        window.dispatchEvent(new Event('spotify:session-expired'))
+
+        return Promise.reject(refreshError)
+      }
     }
 
     return Promise.reject(error)

@@ -45,6 +45,18 @@ export const AuthProvider = ({ children }) => {
     navigate('/')
   }
 
+  useEffect(() => {
+    const handleSessionExpired = () => {
+      logout()
+    }
+
+    window.addEventListener('spotify:session-expired', handleSessionExpired)
+
+    return () => {
+      window.removeEventListener('spotify:session-expired', handleSessionExpired)
+    }
+  }, [])
+
   return (
     <AuthContext.Provider
       value={{
