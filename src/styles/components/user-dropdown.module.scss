@@ -1,0 +1,87 @@
+@use '../colors' as color;
+@use 'sass:color' as c;
+
+.container {
+  position: relative;
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      .username {
+        color: color.$primary;
+      }
+      
+      .avatar {
+        box-shadow: 0 0 8px 1px c.adjust(color.$primary, $alpha: -.4);
+      }
+    }
+
+    .username {
+      display: inline-block;
+      font-size: .9rem;
+      font-weight: 600;
+
+      @media screen and (width < 768px) {
+        display: none;
+      }
+    }
+
+    .avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: c.adjust(color.$gray, $alpha: -.9);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      span {
+        font-size: 1.2rem;
+        font-weight: 700;
+        opacity: .6;
+      }
+    }
+  }
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: color.$secondary;
+    padding: .8rem;
+    border-radius: 12px;
+    min-width: 10rem;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: .5rem;
+    z-index: -1000;
+    scale: 0;
+    opacity: 0;
+    transition: all 300ms ease-in;
+    transform-origin: right;
+
+    &.open {
+      top: 130%;
+      right: 0;
+      scale: 1;
+      opacity: 1;
+      z-index: 1000;
+    }
+  }
+}
