@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { handleCallback } from '../../services/callback'
+import styles from '../../styles/pages/callback.module.scss'
 
 const CallbackPage = () => {
   useEffect(() => {
@@ -7,9 +8,8 @@ const CallbackPage = () => {
   }, [])
 
   return (
-    <div>
-      <h1>Callback Page</h1>
-      <p>This is the callback page.</p>
+    <div className={styles.container}>
+      <div className={styles.loader} />
     </div>
   )
 }
