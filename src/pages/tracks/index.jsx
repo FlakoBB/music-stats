@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import tracksServices from '../../services/tracksServices'
 import TrackRow from '../../components/TrackRow'
 import styles from '../../styles/pages/top-tracks.module.scss'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { useAuth } from '../../context/AuthContext'
+import { toJpeg } from 'html-to-image'
 
 const TIME_RANGES = {
   SHORT: {
@@ -35,6 +36,8 @@ const TracksPage = () => {
     isCreated: false
   })
 
+  const playlistCoverRef = useRef(null)
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setNewPlaylistData((prevData) => ({
@@ -52,9 +55,28 @@ const TracksPage = () => {
     fetchTracks()
   }, [timeRange])
 
+  const generatePlaylistCover = async () => {
+    const element = playlistCoverRef.current
+
+    if (!element) {
+      throw new Error('No se encontró el elemento de la portada')
+    }
+
+    const dataUrl = await toJpeg(element, {
+      pixelRatio: 4,
+      cacheBust: true,
+      backgroundColor: '#a0a0a0'
+    })
+
+    const base64Image = dataUrl.split(',')[1]
+
+    return base64Image
+  }
   const savePlaylist = async (e) => {
     e.preventDefault()
     try {
+      const base64Image = await generatePlaylistCover()
+
       setFormStatus({ isCreating: true, isCreated: false })
       const userID = user.id
 
@@ -63,6 +85,10 @@ const TracksPage = () => {
 
       await tracksServices.addTracksToPlaylist(playlistID, tracks.map(track => track.uri))
 
+      await tracksServices.addPlaylistCover(
+        playlistID,
+        base64Image
+      )
       setFormStatus({ isCreating: true, isCreated: true })
     } catch (err) {
       setFormStatus({ isCreating: false, isCreated: false })
@@ -147,8 +173,13 @@ const TracksPage = () => {
                 >
                   <h2>Crear Playlist</h2>
                   <div className={styles.form_fields}>
-                    <div className={styles.playlist_cover} />
-                    {/* TODO: Implementar la funcionalidad de carga de imagen para la portada de la playlist */}
+                    <div ref={playlistCoverRef} className={styles.playlist_cover}>
+                      <span>
+                        {newPlaylistData.title !== ''
+                          ? newPlaylistData.title
+                          : 'Top Tracks'}
+                      </span>
+                    </div>
                     <FormField
                       label='Nombre'
                       name='title'

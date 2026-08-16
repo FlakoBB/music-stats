@@ -151,8 +151,26 @@
             align-self: center;
             width: 10rem;
             height: 10rem;
-            background-color: c.adjust(color.$gray, $alpha: -.9);
-            border-radius: 8px;
+            background-image: linear-gradient(
+              to left bottom,
+              c.scale(color.$primary, $lightness: -70%),
+              c.scale(color.$primary, $lightness: -75%),
+              c.scale(color.$primary, $lightness: -80%),
+              color.$neutral,
+              color.$neutral,
+              color.$neutral
+            );
+            padding: .5rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+
+            span {
+              font-size: 1.4rem;
+              font-weight: 600;
+              color: color.$primary;
+              word-break: normal;
+            }
           }
         }
       }
